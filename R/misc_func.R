@@ -132,7 +132,7 @@ user_base <- function(...) {
 #' @param plot_type plot_type
 
 ask_variable <- function(plot_type){
-	if(plot_type == "scatterplot"){
+	if(plot_type %in% c("xy_mean_error","scatterplot")){
 		y_variable <- readline("\nWhat is the y variable? \n")
 		x_variable <- readline("\nWhat is the x variable? \n")
 		variable <- c(y=y_variable,x=x_variable)

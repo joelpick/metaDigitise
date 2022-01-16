@@ -181,9 +181,15 @@ specify_type <- function(){
 		#User enters numeric value to specify the plot BEFORE moving on
 	 	pl_type <- NA
 	 	#While keeps asking the user the question until the input is one of the options
-		while(!pl_type %in% c("m","b","s","h")) pl_type <- readline("\nPlease specify the plot_type as either:\n\n m: Mean and error\n b: Box plot\n s: Scatter plot \n h: Histogram\n\n ")
+		while(!pl_type %in% c("m","d","b","s","h")) pl_type <- readline("
+			\nPlease specify the plot_type as either:
+			\n\n m: Mean and error \n d: XY Mean and error \n b: Box plot \n s: Scatter plot \n h: Histogram\n\n ")
 	
-	 	plot_type <- ifelse(pl_type == "m", "mean_error", ifelse(pl_type == "b", "boxplot",ifelse(pl_type == "s", "scatterplot","histogram")))
+	 	plot_type <- ifelse(pl_type == "m", "mean_error", 
+			ifelse(pl_type == "d", "xy_mean_error", 
+	 		ifelse(pl_type == "b", "boxplot",
+	 		ifelse(pl_type == "s", "scatterplot",
+	 			"histogram"))))
 	
 	return(plot_type)
 }

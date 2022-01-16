@@ -70,14 +70,26 @@ redraw_points <- function(plot_type, raw_data, image_details, cex){
 		graphics::text((image_width/4)*c(1,3), rep(-legend_pos*2,2), c("mean","error"), cex=text_cex, xpd=TRUE)
 	}
 
-	if(plot_type %in% c("mean_error","boxplot") & nrow(raw_data)>0){
+	if(plot_type == "xy_mean_error"){
+		graphics::points((image_width/4)*c(1,2,2,3,3), rep(-legend_pos,5), 
+			pch=c(19,19,20,19,20), 
+			col=c(point_col,point_col,"yellow",point_col,"purple"), 
+			cex=point_cex, 
+			xpd=TRUE)
+		graphics::text((image_width/4)*c(1,2,3), rep(-legend_pos*2,3), c("mean","y error","x error"), cex=text_cex, xpd=TRUE)
+	}
+
+	if(plot_type %in% c("mean_error","xy_mean_error","boxplot") & nrow(raw_data)>0){
 		for(i in unique(raw_data$id)){
 			group_data <- subset(raw_data,raw_data$id==i)
 			graphics::points(y~x,group_data, pch=19, col=point_col, cex=point_cex)
 			graphics::lines(y~x, group_data, lwd=line_width, col=point_col)
 			graphics::text(mean(group_data$x)+image_width/30,mean(group_data$y),paste0(group_data$id[1]," (",group_data$n[1],")"),srt=90, cex=text_cex, col=point_col)
-			if(plot_type == "mean_error"){
+			if(plot_type %in% c("xy_mean_error","mean_error")){
 				graphics::points(group_data$x[1],group_data$y[1], pch=20, col="yellow", cex=point_cex)
+			}
+			if(plot_type == "xy_mean_error"){
+				graphics::points(group_data$x[3],group_data$y[3], pch=20, col="purple", cex=point_cex)
 			}
 		}
 	}

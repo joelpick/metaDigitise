@@ -9,6 +9,12 @@ single_MB_extract <- function(plot_type,cex){
 		group_points <- locator_mD(2, line=TRUE, col="red", pch=19, cex=cex)
 		# graphics::locator(2, type="o", col="red", lwd=2, pch=19)
 	}
+	
+	if(plot_type=="xy_mean_error"){
+		cat("\nClick on Y Error Bar, followed by the Mean, followed by the X Error Bar\n\n")
+		group_points <- locator_mD(3, line=TRUE, col="red", pch=19, cex=cex)
+		# graphics::locator(2, type="o", col="red", lwd=2, pch=19)
+	}
 
 	if(plot_type=="boxplot"){
 		cat("\nClick on Max, Upper Q, Median, Lower Q, and Minimum\nIn that order\n\n")

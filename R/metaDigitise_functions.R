@@ -25,7 +25,7 @@ internal_digitise <- function(image_file, plot_type=NULL, cex){
 	
 	### plot type
 	output$plot_type <- plot_type <- if(is.null(plot_type)){specify_type()}else{plot_type}
-	stopifnot(plot_type %in% c("mean_error","boxplot","scatterplot","histogram"))
+	stopifnot(plot_type %in% c("mean_error","xy_mean_error","boxplot","scatterplot","histogram"))
 
 	### variables
 	output$variable <- ask_variable(plot_type)
@@ -38,7 +38,7 @@ internal_digitise <- function(image_file, plot_type=NULL, cex){
 
 
 	### N entered?
-	if(plot_type %in% c("mean_error","boxplot")) {
+	if(plot_type %in% c("mean_error","xy_mean_error","boxplot")) {
 		askN <- user_options("\nDo you know sample sizes? (y/n) ",c("y","n"))
 		output$entered_N <- ifelse(askN =="y", TRUE, FALSE)
 	}else{
@@ -56,7 +56,7 @@ internal_digitise <- function(image_file, plot_type=NULL, cex){
 	if(plot_type %in% c("scatterplot","histogram")) output$knownN <- do.call(knownN,output)
 
 	## error type
-	if(plot_type %in% c("mean_error")) {
+	if(plot_type %in% c("mean_error","xy_mean_error")) {
 		output$error_type <- user_options("\nType of error (se, CI95, sd): ", c("se","CI95","sd"))
 	}
 
@@ -99,7 +99,7 @@ summary.metaDigitise<-function(object, ...){
 	pd <- object$processed_data
 	fn <- filename(object$image_file)
 
-	if (object$plot_type == "mean_error"){
+	if (object$plot_type %in% c("mean_error","xy_mean_error")){
 		out <- data.frame(
 			filename=fn,
 			group_id=pd$id,

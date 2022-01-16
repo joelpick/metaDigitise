@@ -49,6 +49,10 @@ convert_group_data <- function(cal_data, plot_type){
 		if(plot_type == "mean_error") {
 			convert_data <- rbind(convert_data, data.frame(id=i, mean=group_data$y[2], error=abs(group_data$y[1] - group_data$y[2]), n=group_data$n[1]))
 		}
+		
+		if(plot_type == "xy_mean_error") {
+			convert_data <- rbind(convert_data, data.frame(id=i, mean=c(group_data$y[2],group_data$x[2]), error=c(abs(group_data$y[1] - group_data$y[2]),abs(group_data$x[3] - group_data$x[2])), n=group_data$n[1]))
+		}
 
 		if(plot_type == "boxplot") {
 			convert_data <- rbind(convert_data, data.frame(id=i, max=group_data[1,"y"], q3=group_data[2,"y"], med=group_data[3,"y"], q1=group_data[4,"y"], min=group_data[5,"y"], n=group_data$n[1]))
@@ -85,7 +89,7 @@ process_data <- function(object){
 	plot_type <- object$plot_type
 	variable <- object$variable
 
-	if(plot_type %in% c("mean_error","boxplot")){
+	if(plot_type %in% c("mean_error","xy_mean_error","boxplot")){
 		cal_data <- do.call(calibrate, object)
 		processed_data <- convert_group_data(cal_data=cal_data, plot_type=plot_type)
 		processed_data$variable <- variable
